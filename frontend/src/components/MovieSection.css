@@ -1,0 +1,45 @@
+.movie-section {
+  padding: 40px 70px;
+  background: #111827;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.section-header h2 {
+  color: white;
+  font-size: 28px;
+  margin: 0;
+}
+
+.section-header button {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.section-header button:hover {
+  color: white;
+}
+
+.movie-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+}
+
+.movie-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.movie-row::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 10px;
+}

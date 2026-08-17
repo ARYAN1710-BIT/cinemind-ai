@@ -1,0 +1,36 @@
+.watchlist-page {
+  padding: 30px 5%;
+}
+
+.watchlist-page h1 {
+  margin-bottom: 25px;
+}
+
+.watchlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.watchlist-movie {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.watchlist-movie button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.watchlist-movie button:hover {
+  opacity: 0.85;
+}
+
+.watchlist-empty {
+  text-align: center;
+  margin-top: 50px;
+}
