@@ -1,18 +1,23 @@
+
 .movie-section {
-  padding: 40px 70px;
+  padding: 35px 24px;
   background: #111827;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Section heading */
 .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
 .section-header h2 {
   color: white;
   font-size: 28px;
+  font-weight: 600;
   margin: 0;
 }
 
@@ -22,24 +27,53 @@
   color: #9ca3af;
   cursor: pointer;
   font-size: 14px;
+  transition: color 0.3s ease;
 }
 
 .section-header button:hover {
   color: white;
 }
 
+/* Movie carousel */
 .movie-row {
   display: flex;
   gap: 20px;
+  width: 100%;
   overflow-x: auto;
   padding-bottom: 15px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
+/* Scrollbar */
 .movie-row::-webkit-scrollbar {
   height: 6px;
+}
+
+.movie-row::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .movie-row::-webkit-scrollbar-thumb {
   background: #374151;
   border-radius: 10px;
+}
+
+.movie-row::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .movie-section {
+    padding: 25px 16px;
+  }
+
+  .section-header h2 {
+    font-size: 22px;
+  }
+
+  .movie-row {
+    gap: 14px;
+  }
 }

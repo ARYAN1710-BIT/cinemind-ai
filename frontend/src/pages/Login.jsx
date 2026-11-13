@@ -1,9 +1,12 @@
+import "./Auth.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,7 +30,12 @@ function Login() {
     setLoading(true);
 
     try {
-      await loginUser(formData);
+      const data = await loginUser(formData);
+
+      // Update authentication context
+      login(data.access_token);
+
+      // Navigate to Home
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -39,15 +47,22 @@ function Login() {
     }
   };
 
-  return (
-    <div className="auth-page">
-      <h1>Login</h1>
+  
+return (
+  <div className="auth-page">
+    <div className="auth-card">
+      <div className="auth-logo">🎬 CINEMIND AI</div>
+
+      <h1>Welcome Back</h1>
+      <p className="auth-subtitle">
+        Sign in to continue your movie journey
+      </p>
 
       <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email address"
           value={formData.email}
           onChange={handleChange}
           required
@@ -62,19 +77,20 @@ function Login() {
           required
         />
 
-        {error && <p>{error}</p>}
+        {error && <p className="auth-error">{error}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Signing in..." : "Sign In"}
         </button>
       </form>
 
-      <p>
+      <p className="auth-footer">
         Don't have an account?{" "}
-        <Link to="/register">Register</Link>
+        <Link to="/register">Create Account</Link>
       </p>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;

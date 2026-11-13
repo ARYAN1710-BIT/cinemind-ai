@@ -1,13 +1,13 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getCurrentUser,
-  logoutUser,
-} from "../services/authService";
+import { getCurrentUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 import "./Profile.css";
 
 function Profile() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,8 +30,8 @@ function Profile() {
   }, []);
 
   const handleLogout = () => {
-    logoutUser();
-    navigate("/login");
+    logout();
+    navigate("/", { replace: true });
   };
 
   if (loading) {
@@ -59,39 +59,31 @@ function Profile() {
 
   return (
     <div className="profile-page">
-
       <div className="profile-background"></div>
 
       <div className="profile-container">
 
         {/* Profile Header */}
-
         <div className="profile-header">
-
           <div className="profile-avatar">
             {initial}
           </div>
 
           <div className="profile-header-info">
             <h1>{user.username}</h1>
-
             <p>{user.email}</p>
 
             <span className="profile-member">
               CineMind Member
             </span>
           </div>
-
         </div>
 
         {/* Profile Information */}
-
         <div className="profile-section">
-
           <h2>Account Information</h2>
 
           <div className="profile-info-grid">
-
             <div className="profile-info-box">
               <span>Username</span>
               <strong>{user.username}</strong>
@@ -111,19 +103,14 @@ function Profile() {
               <span>Account</span>
               <strong>Active</strong>
             </div>
-
           </div>
-
         </div>
 
         {/* CineMind Activity */}
-
         <div className="profile-section">
-
           <h2>Your CineMind</h2>
 
           <div className="profile-stats">
-
             <div
               className="profile-stat"
               onClick={() => navigate("/favorites")}
@@ -151,26 +138,20 @@ function Profile() {
                 <span>Movies you want to watch</span>
               </div>
             </div>
-
           </div>
-
         </div>
 
         {/* Logout */}
-
         <div className="profile-actions">
-
           <button
             className="profile-logout"
             onClick={handleLogout}
           >
             Logout
           </button>
-
         </div>
 
       </div>
-
     </div>
   );
 }

@@ -31,6 +31,6 @@ export const searchMovies = async (query) => {
       query,
     },
   });
-
+  
   return response.data;
 };

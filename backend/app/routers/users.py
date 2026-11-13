@@ -16,19 +16,34 @@ router = APIRouter()
 def get_profile(current_user: CurrentUser, db: DBSession):
     stats = UserStats(
         favorites_count=db.scalar(
-            select(func.count(Favorite.id)).where(Favorite.user_id == current_user.id)
+            select(func.count(Favorite.id)).where(
+                Favorite.user_id == current_user.id
+            )
         ) or 0,
         watchlist_count=db.scalar(
-            select(func.count(Watchlist.id)).where(Watchlist.user_id == current_user.id)
+            select(func.count(Watchlist.id)).where(
+                Watchlist.user_id == current_user.id
+            )
         ) or 0,
         ratings_count=db.scalar(
-            select(func.count(Rating.id)).where(Rating.user_id == current_user.id)
+            select(func.count(Rating.id)).where(
+                Rating.user_id == current_user.id
+            )
         ) or 0,
         reviews_count=db.scalar(
-            select(func.count(Review.id)).where(Review.user_id == current_user.id)
+            select(func.count(Review.id)).where(
+                Review.user_id == current_user.id
+            )
         ) or 0,
     )
-    return ProfileResponse.model_validate(current_user).model_copy(update={"stats": stats})
+
+    return ProfileResponse(
+        id=current_user.id,
+        username=current_user.username,
+        email=current_user.email,
+        created_at=current_user.created_at,
+        stats=stats,
+    )
 
 
 @router.put("/me", response_model=ProfileResponse)
