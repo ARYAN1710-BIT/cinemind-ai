@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from sqlalchemy import text
 from app.routers import auth, users, movies, favorites, watchlist, ratings, reviews
 
 app = FastAPI(
@@ -33,3 +33,11 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/db-check")
+def db_check(db: Session = Depends(get_db)):
+    try:
+        db.execute(text("SELECT 1"))
+        return {"database": "connected"}
+    except Exception as e:
+        return {"database": "failed", "error": str(e)}
