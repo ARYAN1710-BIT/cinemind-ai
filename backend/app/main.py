@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from app.database.database import get_db
+from app.database.database import get_db, engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.routers import auth, users, movies, favorites, watchlist, ratings, reviews
@@ -26,7 +26,7 @@ app.include_router(watchlist.router, prefix="/api/watchlist", tags=["Watchlist"]
 app.include_router(ratings.router, prefix="/api/ratings", tags=["Ratings"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["Reviews"])
 
-
+Base.metadata.create_all(bind=engine)
 @app.get("/")
 def root():
     return {"message": "CineMind AI Backend is running"}
