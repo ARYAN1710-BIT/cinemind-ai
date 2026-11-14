@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+from app.database.database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.routers import auth, users, movies, favorites, watchlist, ratings, reviews
