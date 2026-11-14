@@ -7,41 +7,47 @@ import "./HeroBanner.css";
 function HeroBanner() {
   const [movies, setMovies] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const data = await getTrendingMovies();
-        setMovies(mapMovies(data).filter((movie) => movie.backdrop));
+
+        const mappedMovies = mapMovies(data).filter(
+          (movie) => movie.backdrop
+        );
+
+        setMovies(mappedMovies);
       } catch (error) {
         console.error("Failed to load hero movies:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchMovies();
   }, []);
 
-  useEffect(() => {
-    if (movies.length === 0) return;
+  if (loading) {
+  return (
+    <section className="hero-banner">
+      <div className="hero-loading">
+        Loading...
+      </div>
+    </section>
+  );
+}
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) =>
-        prev === movies.length - 1 ? 0 : prev + 1
-      );
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [movies]);
-
-  if (movies.length === 0) {
-    return (
-      <section className="hero-banner">
-        <div className="hero-loading">
-          Loading...
-        </div>
-      </section>
-    );
-  }
+if (movies.length === 0) {
+  return (
+    <section className="hero-banner">
+      <div className="hero-loading">
+        No trending movies available.
+      </div>
+    </section>
+  );
+}
 
   const movie = movies[currentIndex];
 
